@@ -1,6 +1,7 @@
 import type { InstantSearch } from "instantsearch.js";
 import { getInitialResults, waitForResults } from "instantsearch.js/es/lib/server";
 import { getContext } from "svelte";
+import { render } from "svelte/server";
 
 const serverContext = Symbol("InstantSearch:serverContext");
 
@@ -16,6 +17,6 @@ export function getServerState(component: any, serverUrl: URL): Promise<Record<s
       search.dispose();
       resolve(results);
     };
-    component.render({}, { context: new Map([[serverContext, { notifyServer, serverUrl }]]) });
+    render(component, { context: new Map([[serverContext, { notifyServer, serverUrl }]]) });
   });
 }
